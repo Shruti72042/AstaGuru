@@ -1,0 +1,71 @@
+{
+  "login": {
+    "validLogin": {
+      "mobileNo": "9870121070",
+      "expectedUrl": "https://development.d2mp9949i73scy.amplifyapp.com/"
+    },
+    "invalidLogin": {
+      "mobileNo": "9870121070",
+      "expectedError": "Wrong verification code"
+    },
+    "emailLogin": {
+      "email": "shruti.katageri@roxiler.com",
+      "expectedUrl": "https://development.d2mp9949i73scy.amplifyapp.com/auctions"
+    },
+	"loginWithoutOTP":{
+		"mobileNo": "9870121070",
+		"expectedErrorMessage": "Please enter complete otp"
+	},
+	"loginWithoutMobileNo": {
+		"mobileNo": "",
+		"expectedErrorMessage":"Please enter your mobile number"
+	},	
+	"anotherAccount":{
+		"mobileNo": "8698892618"
+	
+	}
+	
+	
+  },
+  "signup": {
+    "validSignUp": {
+      "name": "Shruti M K",
+      "emailId": "shruti.katageri@roxiler.com",
+      "mobileNo": "7204278245",
+      "successfulMessage": "Congratulations!",
+      "expectedResult": "https://development.d2mp9949i73scy.amplifyapp.com/"
+    },
+    "missingMobileNo": {
+      "name": "Shruti",
+      "emailId": "shrutikatageri184@gmail.com",
+      "mobileNo": "",
+      "errorMessage": "Please enter your mobile number"
+    },
+	"signInLink":{
+	 "name": "Shruti M K",
+	 "emailId": "shruti.katageri@roxiler.com",
+     "mobileNo": "9870121070",
+	 "expectedResult": "SIGN IN"
+		
+	}
+  },
+  "auction": {
+	"placingBid": {
+		
+		"auctionName": "Active Auction Testing",
+		"lotName": "A Medallion Design Wool Carpet",
+		"successfulMessage": "Your bid has been submitted successfully, you are currently leading."
+		
+	},
+	"statusOfTheLot":{
+		"lotName": "A Medallion Design Wool Carpet"
+	},
+	
+	"proxyBid":{
+		"auctionName": "Manifest",
+		"lotName":"Ramgopal Vijayvargiya"
+		
+	}
+  }
+  
+}

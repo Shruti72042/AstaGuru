@@ -1,0 +1,14 @@
+{
+  "validLogin": {
+    "mobileNo": "7204278245",
+    "expectedUrl": "https://development.d2mp9949i73scy.amplifyapp.com/"
+  },
+  "invalidLogin": {
+    "mobileNo": "9870121070",
+    "expectedError": "Wrong verification code"
+  },
+  "emailLogin": {
+    "email": "shruti.katageri@roxiler.com",
+    "expectedUrl": "https://development.d2mp9949i73scy.amplifyapp.com/auctions"
+  }
+}
