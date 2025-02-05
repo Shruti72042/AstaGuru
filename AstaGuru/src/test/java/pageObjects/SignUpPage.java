@@ -1,5 +1,4 @@
 package pageObjects;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
@@ -20,8 +19,6 @@ public class SignUpPage {
 	    	//Initialization
 	    	//super(driver);
 	    	this.driver=driver;
-	    	
-	    	
 	    	properties = new Properties();
 	        try {
 	            FileInputStream fis = new FileInputStream("src/test/resources/Locators/signUp.properties");
@@ -29,7 +26,7 @@ public class SignUpPage {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-}
+      }
 	   
 
 	    public WebElement clickOnCreateAccountButton() {

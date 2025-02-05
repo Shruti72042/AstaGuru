@@ -1,6 +1,6 @@
 Feature: Login Scenarios
  
- @SkipLogin
+@Regression, @SkipLogin 
 Scenario: Successful Login with Valid Mobile Number
     Given Launch chrome browser
     When User enters valid mobile number for valid login
@@ -10,7 +10,7 @@ Scenario: Successful Login with Valid Mobile Number
     Then User navigates to the home page for valid login
     And Closes the browser
 
-@SkipLogin
+@Regression, @SkipLogin
 Scenario: Login with valid Mobile No and Invalid OTP
     Given Launch chrome browser
     When User enters invalid mobile number for invalid login

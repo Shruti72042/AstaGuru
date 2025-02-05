@@ -70,8 +70,6 @@ public class LoginPage{
 	    
 	    }
 	  */
-
-
 package pageObjects;
 
 import org.openqa.selenium.By;
@@ -102,8 +100,6 @@ public class LoginPage {
         }
     }
     
-   
-   
     public WebElement getMobileNumberField() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(properties.getProperty("mobileNumberTxtFld"))));
@@ -121,8 +117,6 @@ public class LoginPage {
     }
     
  
-    
-
     public WebElement ClickGetStartedBtn() throws InterruptedException {
     	//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
        // wait.until(ExpectedConditions.elementToBeClickable(By.xpath(properties.getProperty("getStartedButton"))));
@@ -139,16 +133,20 @@ public class LoginPage {
     
     public WebElement getInvalidMobileNoErrorMessage() {
         return driver.findElement(By.xpath(properties.getProperty("invalidMobileNoErrorMsg")));
-}
+    }
+    
     public WebElement clickOnLoginWithMail() {
         return driver.findElement(By.xpath(properties.getProperty("loginWithEmailBtn")));
     }
+    
     public WebElement enterEmaill() {
         return driver.findElement(By.xpath(properties.getProperty("loginWithEmailFld")));
     }
+    
     public WebElement withoutOTPErrorMsg() {
         return driver.findElement(By.xpath(properties.getProperty("loginWithoutOtpErrorMessage")));
     }
+    
     public WebElement withoutMobileNoErrorMessage() {
     	return driver.findElement(By.xpath(properties.getProperty("withoutMobileNoErrorMessage")));
     }

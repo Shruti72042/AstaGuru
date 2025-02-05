@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 /*
-import java.io.FileInputStream;
+import java.io.FileInputStream
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
@@ -55,9 +55,11 @@ public class BaseTest {
 import org.openqa.selenium.WebDriver;
 
 public class Base{
+	
     private static ThreadLocal<WebDriver> driverThread = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
+  
         return driverThread.get();
     }
 
