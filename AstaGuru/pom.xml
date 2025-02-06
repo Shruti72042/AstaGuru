@@ -165,6 +165,7 @@
         
         <!-- Maven Surefire Plugin -->
       <build>
+         <defaultGoal>clean test</defaultGoal>
         <plugins>
          <!-- Maven Surefire Plugin -->
            <plugin>
