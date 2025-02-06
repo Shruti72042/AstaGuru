@@ -804,3 +804,6 @@
 2025-02-06 16:45:59,440 [main] INFO io.github.bonigarcia.wdm.WebDriverManager - Using chromedriver 129.0.6668.100 (resolved driver for Chrome 129)
 2025-02-06 16:45:59,458 [main] INFO io.github.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as /home/roxiler-systems/.cache/selenium/chromedriver/linux64/129.0.6668.100/chromedriver
 2025-02-06 16:46:37,644 [main] INFO stepDefinitions.Auctions - ...Scenario Started...
+2025-02-06 18:15:03,398 [main] INFO stepDefinitions.Hooks - Starting scenario: Check the lots based on its Status like Bid is closed and You Have own Bid
+2025-02-06 18:15:03,974 [main] INFO io.github.bonigarcia.wdm.WebDriverManager - Using chromedriver 129.0.6668.100 (resolved driver for Chrome 129)
+2025-02-06 18:15:03,993 [main] INFO io.github.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as /home/roxiler-systems/.cache/selenium/chromedriver/linux64/129.0.6668.100/chromedriver
