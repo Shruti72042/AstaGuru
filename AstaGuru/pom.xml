@@ -147,7 +147,11 @@
 <properties>
     <allure.version>2.24.0</allure.version>
     <aspectj.version>1.9.20.1</aspectj.version>
+   
+    <maven.compiler.source>1.8</maven.compiler.source> <!-- Or 1.7, 11, etc. -->
+    <maven.compiler.target>1.8</maven.compiler.target> <!-- Same as source -->
 </properties>
+
 
 <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
 <dependencyManagement>
