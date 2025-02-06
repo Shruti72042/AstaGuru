@@ -1,22 +1,15 @@
 package pageObjects;
-
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AuctionsPage {
 	WebDriver driver;
 	 Properties properties;
-	
 	
 	    public AuctionsPage(WebDriver driver) {
 	    	this.driver=driver;
@@ -76,8 +69,8 @@ public class AuctionsPage {
           WebElement bidIsClosedStatus = driver.findElement(By.xpath(bidIsClosed ));
             return bidIsClosedStatus;
         
-		
 	    }
+	    
 	    public List<WebElement> getYouHaveOwnStatus() {
 	    	return driver.findElements(By.xpath(properties.getProperty("youHaveOwnStatuses")));
 		
@@ -87,9 +80,8 @@ public class AuctionsPage {
 	            String dynamicLocator = locatorTemplate.replace("{}", lotName);
 	            WebElement placeBidBtn = driver.findElement(By.xpath(dynamicLocator));
 	            return placeBidBtn;
-	        
-	  
 	    }
+	    
 	    public WebElement agreeBtn() {
 	        return driver.findElement(By.xpath(properties.getProperty("agreeBtn")));
 	    
@@ -98,11 +90,13 @@ public class AuctionsPage {
 	        return driver.findElement(By.xpath(properties.getProperty("confirmBtn")));
 	       
 	    }
+	    
 	    public WebElement getPlacedBidSuccessfulMgs() {
 	    	 
 	        return driver.findElement(By.xpath(properties.getProperty("placedBidSuccessfulMsg")));
 	    
 	    }
+	    
 	    public WebElement getCurrentlyLeadingStatus(String lotName) {
 	    	 
 	    	 String currentlyLeadingLocator = properties.getProperty("currentlyLeadingStatusLocator");
@@ -111,6 +105,7 @@ public class AuctionsPage {
 	        return currentlyLeadingStatus;
 	    
 	    }
+	    
 	    public WebElement getYouHaveWonStatus(String lotName) {
 	    	 
 	    	 String youHaveWonLocator = properties.getProperty("youHaveWonLocator");
@@ -128,15 +123,19 @@ public class AuctionsPage {
 	        return lotStaus;
 	    
 	    }
+	    
 	    public WebElement getAccountTab() {
 	    	return driver.findElement(By.xpath(properties.getProperty("accountTab")));
 	    }
+	    
 	    public WebElement getLogoutLink() {
 	    	return driver.findElement(By.xpath(properties.getProperty("logoutLink")));
 	    }
+	    
 	    public WebElement getLoginLink() {
 	    	return driver.findElement(By.xpath(properties.getProperty("loginLink")));
 	    }
+	    
 	    public WebElement getProxyBidBtn(String lotName) {
 	    	 String proxyBidLocator = properties.getProperty("proxyBidLocator");
 	            String proxyBid = proxyBidLocator.replace("{}", lotName);
@@ -148,8 +147,5 @@ public class AuctionsPage {
 	    public WebElement clickOnAstaGuruLink() {
 	    	return driver.findElement(By.xpath(properties.getProperty("astaGuruLink")));
 			
-		}
-	    
-	    
-	    
+	    }	    
 }

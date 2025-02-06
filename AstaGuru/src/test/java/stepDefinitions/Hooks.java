@@ -1,5 +1,7 @@
 
 package stepDefinitions;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -21,9 +23,12 @@ public class Hooks {
     private static WebDriver driver;
     private static LoginPage loginPage;
     private static boolean isLoggedIn = false; // Track login status
-
+    private static  Logger logger = LogManager.getLogger(Hooks.class);
     @Before
     public void setUp(Scenario scenario) throws InterruptedException {
+    	logger=LogManager.getLogger(this.getClass());
+    	
+    	 logger.info("Starting scenario: {}", scenario.getName());
         if (driver == null) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
@@ -33,6 +38,7 @@ public class Hooks {
         
      // Check for the @SkipLogin tag
         if (scenario.getSourceTagNames().contains("@SkipLogin")) {
+        	  logger.info("Skipping login for scenario: {}", scenario.getName());
             return; // Skip the login logic
         }
 

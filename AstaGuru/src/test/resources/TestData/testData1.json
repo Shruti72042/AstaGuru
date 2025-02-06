@@ -49,16 +49,21 @@
 		
 	}
   },
+  
   "auction": {
+	"LotsStatusFromTestingAuction":{
+		"auctionName": "Testing the Auction"
+		},
+	
 	"placingBid": {
 		
-		"auctionName": "Active Auction Testing",
-		"lotName": "A Medallion Design Wool Carpet",
+		"auctionName": "Testing the Auction",
+		"lotName": "An Anglo-Indian Rosewood Console Table",
 		"successfulMessage": "Your bid has been submitted successfully, you are currently leading."
 		
 	},
 	"statusOfTheLot":{
-		"lotName": "A Medallion Design Wool Carpet"
+		"lotName": "An Anglo-Indian Rosewood Console Table"
 	},
 	
 	"proxyBid":{

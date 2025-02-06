@@ -1,5 +1,8 @@
 package stepDefinitions;
 import io.cucumber.java.en.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.time.Duration;
@@ -29,17 +32,18 @@ public class Auctions {
     WebElement actionTab ;
     WebElement accountTab;
     Properties properties;
-    HashMap<String, String> lotStatuses = new HashMap<>();
+   HashMap<String, String> lotStatuses = new HashMap<>();
     WebElement placeBidBtn;
     WebElement currentlyLeadingStatus;
     List<WebElement>lotNames;
-    String currentLotStatus;
-    String status;
-    
+    private static final Logger logger = LogManager.getLogger(Auctions.class);
     private Map<String, String> lotStatusData = new HashMap<>();
+    String viewCatalogue;
+    //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
   
     @Given("User logs in with valid credentials")
     public void userLogsInWithValidCredentials() throws InterruptedException {
+    	
         driver = Base.getDriver();
         LoginPage loginPage = new LoginPage(driver);
         auctionsPage = new AuctionsPage(driver);
@@ -51,10 +55,8 @@ public class Auctions {
         loginPage.getMobileNumberField().sendKeys(mobileNo);
         loginPage.getTermsAndConditionsCheckbox().click();
         loginPage.getOtpButton().click();
-
         // Wait for manual OTP entry
         Thread.sleep(25000);
-
         loginPage.ClickGetStartedBtn().click();
         Thread.sleep(10000);
     }
@@ -62,15 +64,17 @@ public class Auctions {
     
     @When("Mouse hover on Auctions tab and click on Auctions Link")
     public void mouse_hover_on_auctions_tab() throws InterruptedException {
+    	Map<String, Object> actionNameData = TestDataUtil.getTestData("auction");
+        Map<String, Object> placingBid = (Map<String, Object>) actionNameData.get("placingBid");
+        String auctionName = (String) placingBid.get("auctionName");
+    	logger.info("...Scenario Started...");
     	driver = Base.getDriver();
        auctionsPage = new AuctionsPage(driver);
     	  actionTab = auctionsPage.getAuctionTab();
     	 Actions action = new Actions(driver);
 		action.moveToElement(actionTab).perform();
 		 auctionsPage.getAuctionsLink().click();
-		 //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(properties.getProperty("viewResult")))); 
-		 Thread.sleep(5000);
+		Thread.sleep(5000); 
     }
 
     @And("Click on first View catalogue button")
@@ -78,24 +82,40 @@ public class Auctions {
     	Map<String, Object> actionNameData = TestDataUtil.getTestData("auction");
         Map<String, Object> placingBid = (Map<String, Object>) actionNameData.get("placingBid");
         String auctionName = (String) placingBid.get("auctionName");
-    	
+      //  wait.until(ExpectedConditions.elementToBeClickable(auctionsPage.getFirstViewVatalogueBtn(auctionName)));
+       
+        //wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     	auctionsPage.getFirstViewVatalogueBtn(auctionName).click();
-    	 Thread.sleep(5000);
+    	 //Thread.sleep(5000);
     }
    
+    
+   
+    @Given("Click on Testing The Auction Section's View Catalogue Button")
+    public void click_on_testing_the_auction_section_s_view_catalogue_button() {
+    Map<String, Object> actionNameData = TestDataUtil.getTestData("auction");
+    Map<String, Object> placingBid = (Map<String, Object>) actionNameData.get("LotsStatusFromTestingAuction");
+    String auctionName = (String) placingBid.get("auctionName");
+  //  wait.until(ExpectedConditions.elementToBeClickable(auctionsPage.getFirstViewVatalogueBtn(auctionName)));
+   
+    //wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+	auctionsPage.getFirstViewVatalogueBtn(auctionName).click();
+	 //Thread.sleep(5000);
+   }
+    
     @Then("Observe the lot list")
     public void observe_the_lot_list() throws InterruptedException {
     	List<WebElement> lots = (List<WebElement>) auctionsPage.getListOfLots();
     	 for (WebElement lot : lots) {
     	        String lotName = lot.getText();
     	        System.out.println(lotName);
-    	        Thread.sleep(5000);
+    	        //Thread.sleep(5000);
     	}
     }
     
-    
-    @And("Click on View Catalogue button and store all the lots with respect to it's Status")
-    public void click_on_view_catalogue_button_and_store_lots() throws InterruptedException {
+
+@Given("Click on View Catalogue button and store all the lots with respect to it's status")
+public void click_on_view_catalogue_button_and_store_all_the_lots_with_respect_to_it_s_status() throws InterruptedException {
         List<WebElement> viewCatalogueButtons = auctionsPage.clickOnViewCatalogueButtons();
 
         for (int index = 0; index < viewCatalogueButtons.size(); index++) {
@@ -155,115 +175,104 @@ public class Auctions {
         });
     }
     
+    private String status = ""; // Temporary storage for status
+    private String currentLotStatus = ""; // Temporary storage for currentLotStatus
 
     @Given("Select the lot and place the bid and do validation")
     public void select_the_lot_and_place_the_bid_and_do_validation() throws InterruptedException, TimeoutException {
-    	String status = "";
-    	
-    	//    String status = null;
-         Map<String, Object> lotData = TestDataUtil.getTestData("auction");
-         Map<String, Object> placingBid = (Map<String, Object>) lotData.get("placingBid");
-         String lotName = (String) placingBid.get("lotName");
-	    	 String successfulMessage = (String) placingBid.get("successfulMessage");
+        Map<String, Object> lotData = TestDataUtil.getTestData("auction");
+        Map<String, Object> placingBid = (Map<String, Object>) lotData.get("placingBid");
+        String lotName = (String) placingBid.get("lotName");
+        String successfulMessage = (String) placingBid.get("successfulMessage");
 
-         // Use WebDriverWait to handle potential delays
-         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+       // wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//h3[text()='SERVICES']")));
 
-         // Iterate over possible statuses and determine the current status
-         for (String statusType : new String[]{"currentlyLeading", "bidIsClosed", "youHaveWon", "placeBid"}) {
-             WebElement element = null;
+        for (String statusType : new String[]{"currentlyLeading", "bidIsClosed", "youHaveWon", "placeBid"}) {
+            WebElement element = null;
 
-             try {
-                 switch (statusType) {
-                     case "currentlyLeading":
-                         element = wait.until(ExpectedConditions.visibilityOf(
-                                 auctionsPage.getCurrentlyLeadingStatus(lotName)
-                         ));
-                         break;
+            try {
+                switch (statusType) {
+                    case "currentlyLeading":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                auctionsPage.getCurrentlyLeadingStatus(lotName)
+                        ));
+                        break;
+                    case "bidIsClosed":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                auctionsPage.getBidIsClosedStatus(lotName)
+                        ));
+                        break;
+                    case "youHaveWon":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                auctionsPage.getYouHaveWonStatus(lotName)
+                        ));
+                        break;
+                    case "placeBid":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                auctionsPage.clickOnPlaceBidBtn(lotName)));
+                        if (element != null && element.isDisplayed()) {
+                            auctionsPage.clickOnPlaceBidBtn(lotName).click();
+                            auctionsPage.agreeBtn().click();
+                            Thread.sleep(5000);
+                            auctionsPage.confirmBtn().click();
+                            Thread.sleep(1000);
+                            String actualSuccessfulMessage = auctionsPage.getPlacedBidSuccessfulMgs().getText();
+                            Assert.assertEquals(actualSuccessfulMessage, successfulMessage);
+                            Thread.sleep(5000);
 
-                     case "bidIsClosed":
-                         element = wait.until(ExpectedConditions.visibilityOf(
-                                 (WebElement) auctionsPage.getBidIsClosedStatus(lotName)
-                         ));
-                         break;
-                         
-
-                     case "youHaveWon":
-                         element = wait.until(ExpectedConditions.visibilityOf(
-                                 auctionsPage.getYouHaveWonStatus(lotName)
-                         ));
-                         break;
-
-                     case "placeBid":
-                         element = wait.until(ExpectedConditions.visibilityOf(
-                                 auctionsPage.clickOnPlaceBidBtn(lotName)));
-                         if (element != null && element.isDisplayed()) {
-                             auctionsPage.clickOnPlaceBidBtn(lotName).click();
-                             auctionsPage.agreeBtn().click();
-                             Thread.sleep(5000); // Explicit wait, can be replaced with WebDriverWait
-                             auctionsPage.confirmBtn().click();
-                             Thread.sleep(1000);
-                         
-                  	 
-                  	    	 String actualSuccessfulMessage = auctionsPage.getPlacedBidSuccessfulMgs().getText();
-                  	    	  System.out.println("ActualMessage:" + actualSuccessfulMessage);
-                  	    	 System.out.println("expectedMessage:" +successfulMessage );
-                  	        Assert.assertEquals(actualSuccessfulMessage, successfulMessage);
-                  	        Thread.sleep(5000);
-                  	     
-                          // After placing the bid, get the status
-                          String currentLotStatus = auctionsPage.getCurrentlyLeadingStatus(lotName).getText();
-                          System.out.println("Current Lot Status after placing the bid: " + currentLotStatus);
-           
-                         }
-                         break;
-                 }
-                 // If an element is found and is displayed, retrieve the text and exit the loop
-                 if (element != null && element.isDisplayed()) {
-                     status = element.getText();
-                     break;
-                 }
-             } catch (Exception e) {
-                 // Handle exceptions for this status and proceed with the next one
-                 System.out.println("Status type not found: " + statusType);
-             }
+                            currentLotStatus = auctionsPage.getCurrentlyLeadingStatus(lotName).getText();
+                        }
+                        break;
                 }
-             if (status.isEmpty()) {
-                 throw new TimeoutException("No matching status found for the lot: " + lotName);
-             }
-      
-             System.out.println("Status of the lot: " + status); 
-         }
-    
-    @And("click on Agree Button for aceepting terms and condition")
-    public void click_on_agree_button_for_aceepting_terms_and_condition() throws InterruptedException {
-    	auctionsPage.agreeBtn().click();
-    	Thread.sleep(5000);
-    }
-     
-    
-    @And("click on Confirm Button")
-    public void click_on_confirm_button() throws InterruptedException {
-    	auctionsPage.confirmBtn().click();
-    	Thread.sleep(1000);
-    }
-    
-    @And("Validate the Successful Message")
-    public void validate_the_successful_message() throws InterruptedException {
-    	
- 	    	Map<String, Object> auctionData = TestDataUtil.getTestData("auction");
- 	    	Map<String, Object> 	placingBid=(Map<String, Object>) auctionData.get("placingBid");
- 	    	 String successfulMessage = (String) placingBid.get("successfulMessage");
- 	 
- 	    	 String actualSuccessfulMessage = auctionsPage.getPlacedBidSuccessfulMgs().getText();
- 	    	  System.out.println("ActualMessage:" + actualSuccessfulMessage);
- 	    	 System.out.println("expectedMessage:" +successfulMessage );
- 	        Assert.assertEquals(actualSuccessfulMessage, successfulMessage);
- 	        //driver.quit();
+
+                if (element != null && element.isDisplayed()) {
+                    status = element.getText();
+                    System.out.println("Status of the lot: " + status);
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Status type not found: " + statusType);
+            }
+        }
+
+        if (status.isEmpty() && currentLotStatus.isEmpty()) {
+            throw new TimeoutException("No matching status found for the lot: " + lotName);
+        }
+
+        System.out.println("Status of the lot: " + status);
+        System.out.println("Current lot status: " + currentLotStatus);
     }
     
+    
+    private static boolean isStatusStored = false;
+    @And("Store the status")
+    public void store_the_status() {
+        if (isStatusStored) {
+            System.out.println("Status already stored. Skipping update.");
+            return; // Skip storing the status if already stored
+        }
+
+        // Validate and store status or currentLotStatus
+        if (currentLotStatus != null && !currentLotStatus.isEmpty()) {
+            lotStatusData.put("currentLotStatus", currentLotStatus);
+            System.out.println("Stored currentLotStatus: " + currentLotStatus);
+            isStatusStored = true;
+        } else if (status != null && !status.isEmpty()) {
+            lotStatusData.put("status", status);
+            System.out.println("Stored status: " + status);
+            isStatusStored = true;
+        } else {
+            logger.error("Failed to determine the status of the lot.");
+            throw new AssertionError("Failed to determine the status of the lot.");
+        }
+
+    }
+   
+   /*
     @And("Check the status of the lot")
-    public void check_the_status_of_the_lot() throws TimeoutException {
+    public void check_the_status_of_the_lot() throws TimeoutException, InterruptedException {
         //String status = "";
         Map<String, Object> lotData = TestDataUtil.getTestData("auction");
         Map<String, Object> statusOfTheLot = (Map<String, Object>) lotData.get("statusOfTheLot");
@@ -272,7 +281,7 @@ public class Auctions {
 
         // Use WebDriverWait to handle potential delays
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
+        Thread.sleep(5000);
         // Iterate over possible statuses and determine the current status
         for (String statusType : new String[]{"currentlyLeading", "bidIsClosed", "placeBid", "youHaveWon"}) {
             WebElement element = null;
@@ -319,17 +328,77 @@ public class Auctions {
         if (status.isEmpty()) {
             throw new TimeoutException("No matching status found for the lot: " + lotName);
         }
-        this.status=status;
- 
+        //this.status=status;
         System.out.println("Status of the lot: " + status); 
     }
+   */ 
+    
+  
+    
+    @And("Check the status of the lot")
+    public void check_the_status_of_the_lot() throws TimeoutException, InterruptedException {
+        String status = "";
+        Map<String, Object> lotData = TestDataUtil.getTestData("auction");
+        Map<String, Object> statusOfTheLot = (Map<String, Object>) lotData.get("statusOfTheLot");
+        String lotName = (String) statusOfTheLot.get("lotName");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Thread.sleep(5000);
+        for (String statusType : new String[]{"currentlyLeading", "bidIsClosed", "placeBid", "youHaveWon"}) {
+            WebElement element = null;
+
+            try {
+                switch (statusType) {
+                    case "currentlyLeading":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                auctionsPage.getCurrentlyLeadingStatus(lotName)
+                        ));
+                        break;
+                    case "bidIsClosed":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                (WebElement) auctionsPage.getBidIsClosedStatus(lotName)
+                        ));
+                        break;
+                    case "placeBid":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                auctionsPage.clickOnPlaceBidBtn(lotName)));
+                        break;
+                    case "youHaveWon":
+                        element = wait.until(ExpectedConditions.visibilityOf(
+                                auctionsPage.getYouHaveWonStatus(lotName)
+                        ));
+                        break;
+                }
+
+                if (element != null && element.isDisplayed()) {
+                    status = element.getText();
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Status type not found: " + statusType);
+            }
+        }
+
+        if (status.isEmpty()) {
+            throw new TimeoutException("No matching status found for the lot: " + lotName);
+        }
+  
+        System.out.println("Status of the lot: " + status);
+     // Update lotStatusData
+        if (!status.isEmpty()) {
+            lotStatusData.put("finalStatus", status);
+        } else {
+            logger.error("Final status of the lot could not be determined.");
+        }
+    }
+    
+   
    
     @Given("Logout")
     public void logout() throws InterruptedException {
     	Thread.sleep(5000);
      accountTab = auctionsPage.getAccountTab();
    	 Actions action = new Actions(driver);
-	     //WebElement actionTab = null;
 		action.moveToElement(accountTab).perform();
 		//Thread.sleep(5000);
 		 auctionsPage.getLogoutLink().click();
@@ -350,7 +419,7 @@ public class Auctions {
     	Actions action = new Actions(driver);
 		action.moveToElement(accountLink).perform();
 		auctionsPage.getLoginLink().click();
-		//driver.findElement(By.xpath("//div[text()='Login']")).click();
+		
 	
         if (driver == null) {
             WebDriverManager.chromedriver().setup();
@@ -398,55 +467,46 @@ public class Auctions {
     	driver.navigate().back();
     	driver.manage().deleteAllCookies();
     	driver.navigate().refresh();
-
-    }
-
-    @Given("Check the final status of the lot after bidding")
-    public void chech_the_final_status_of_the_lot_after_bidding() {
-
-    	try {
-            String currentLotStatus = lotStatusData.get("currentLotStatus");
-            String status = lotStatusData.get("status");
-
-            if ("CURRENTLY LEADING".equalsIgnoreCase(currentLotStatus)) {
-                if ("PLACE BID".equalsIgnoreCase(status)) {
-                    System.out.println("Validation Passed: Status transitioned correctly from 'Currently Leading' to 'Place Bid'.");
-                } else {
-                    System.out.println("Validation Failed: Expected 'Place Bid' but got: " + status);
-                    Assert.fail("Validation Failed: Incorrect status transition.");
-                }
-            } else {
-                System.out.println("Validation Failed: Current Lot Status is not 'CURRENTLY LEADING'. Actual status: " + currentLotStatus);
-                Assert.fail("Validation Failed: Incorrect initial status.");
-            }
-        } catch (Exception e) {
-            System.out.println("Exception during validation: " + e.getMessage());
-            Assert.fail("Validation Failed due to an exception.");
-        }
     }
    
+    
+    @And("Validation for the final status of the lot after multiple bidding")
+    public void validation_for_the_final_status_of_the_lot_after_multiple_bidding() {
+        String storedCurrentLotStatus = (String) lotStatusData.get("currentLotStatus");
+        String storedStatus = (String) lotStatusData.get("status");
+        String finalStatus = (String) lotStatusData.get("finalStatus");
 
-    @Given("Select the lot and make proxy bid and do validation")
-    public void select_the_lot_and_make_proxy_bid_and_do_validation() throws InterruptedException {
-    	Map<String, Object> lotData = TestDataUtil.getTestData("auction");
-        Map<String, Object> placingBid = (Map<String, Object>) lotData.get("proxyBid");
-        String lotName = (String) placingBid.get("lotName");
-        
-        auctionsPage.getProxyBidBtn(lotName).click();
-        Thread.sleep(5000);
-       
+        // Log for debugging
+        System.out.println("Stored currentLotStatus: " + storedCurrentLotStatus);
+        System.out.println("Stored status: " + storedStatus);
+        System.out.println("Final status: " + finalStatus);
+
+        // Check that finalStatus is available
+        if (finalStatus == null || finalStatus.isEmpty()) {
+            throw new AssertionError("finalStatus is missing in lotStatusData.");
+        }
+
+        // Perform validation based on available data
+        if (storedCurrentLotStatus != null && !storedCurrentLotStatus.isEmpty()) {
+            // Validate finalStatus against currentLotStatus
+            //Assert.assertEquals(storedCurrentLotStatus, finalStatus);
+            Assert.assertEquals(finalStatus, "PLACE BID");
+        } else if (storedStatus != null && !storedStatus.isEmpty()) {
+            // Validate finalStatus against status
+            Assert.assertEquals(storedStatus, finalStatus);
+        } else {
+            // Neither currentLotStatus nor status is available
+            throw new AssertionError("Neither currentLotStatus nor status is stored in lotStatusData.");
+        }
     }
 
 
-@Then("Navigate to home page")
-public void navigate_to_home_page() {
+    @Then("Navigate to home page")
+    public void navigate_to_home_page() {
 	auctionsPage.clickOnAstaGuruLink().click();
-  // driver.findElement(By.xpath("//a//img[@class='h-[28px] w-[110px] cursor-pointer lg:h-[52px] lg:w-[203px]']")).click();
+  
    }
-}
-
-
-    
+}   
 
 
 

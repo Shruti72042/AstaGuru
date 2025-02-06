@@ -38,8 +38,10 @@ import io.cucumber.junit.CucumberOptions;
     features = {"src/test/resources/Features"},
 		//features = {"src/test/resources/Features/A_Login.feature"},
 		//features= {"src/test/resources/Features/SignUp.feature"},
-    glue = {"stepDefinitions"},
-    tags="@Regression",
+         //features= {"src/test/resources/Features/B_Auctions.feature"},
+    glue = {"stepDefinitions"}, 
+  // tags="@Regression", "@SkipLogin",
+  tags= "@Regression",
    //plugin = {"pretty", "html:target/cucumber-reports/reports_html.html"},
     monochrome = true,
     dryRun = false

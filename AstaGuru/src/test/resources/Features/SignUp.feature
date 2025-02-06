@@ -31,7 +31,6 @@ Scenario: Check the registration without entering Mobile Number
     #And Enter Name
     #And Enter Email-ID
     And Left Blank Mobile No
-    #And Click on Terms and Condition check box
     And Click on Get OTP button
     Then Observe the error message received for without Mobile No
     And Close Browser
