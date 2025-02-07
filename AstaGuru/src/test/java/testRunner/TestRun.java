@@ -35,13 +35,13 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
     
     plugin = {"pretty", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
-    features = {"src/test/resources/Features"},
-		//features = {"src/test/resources/Features/A_Login.feature"},
+   // features = {"src/test/resources/Features"},
+		features = {"src/test/resources/Features/A_Login.feature"},
 		//features= {"src/test/resources/Features/SignUp.feature"},
          //features= {"src/test/resources/Features/B_Auctions.feature"},
     glue = {"stepDefinitions"}, 
   // tags="@Regression", "@SkipLogin",
-  tags= "@Regression",
+//  tags= "@Regression",
    //plugin = {"pretty", "html:target/cucumber-reports/reports_html.html"},
     monochrome = true,
     dryRun = false
