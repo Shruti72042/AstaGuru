@@ -3,7 +3,7 @@ Feature: Auctions Page
 Background: 
   And Mouse hover on Auctions tab and click on Auctions Link
   
- 
+ @Regression 
 Scenario: Navigate to Auctions Page and list the lots from Testing the Auctions sections
   And Click on Testing The Auction Section's View Catalogue Button
   And Observe the lot list
