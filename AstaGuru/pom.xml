@@ -180,7 +180,7 @@
     <configuration>
      <source>1.8</source> <!-- Or you can use 1.7 or 11, based on your Java version -->
                 <target>1.8</target> <!-- Same as source -->
- <!--<includes>**TestRun.java</includes> -->
+ <includes>**TestRun.java</includes>
    <!-- <parallel>methods</parallel> -->
    <!--<threadCount>4</threadCount> -->
     
